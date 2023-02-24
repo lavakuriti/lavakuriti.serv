@@ -7,7 +7,7 @@ app.get('/',(req,res)=>{
     
         </head>
         <body>
-            <h1>kwq</h1>
+            <h1>Quora</h1>
         </body>
     </html>`)
 })
