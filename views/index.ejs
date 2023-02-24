@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping list example</title>
+    <style>
+      #cat
+      {
+        width: 10px;
+      }
+      body
+      {
+        background-color: coral;
+      }
+      li {
+        margin-bottom: 10px;
+      }
+
+      li button {
+        font-size: 8px;
+        margin-left: 20px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My shopping list</h1>
+
+    <div>
+      <label for="item">Enter a new item:</label>
+      <input type="text" name="" id="cat" >
+      <input  type="text" name="item" id="item">
+      <button>Add item</button>
+    </div>
+
+    <ul>
+
+    </ul>
+
+    <script>
+      var arr='<%-names %>';
+var ul=document.getElementsByTagName('ul');
+var but=document.getElementsByTagName('button');
+var input=document.getElementById('item');
+var cc=document.getElementById('cat');
+        var renderdata=[];
+        renderdata=JSON.parse(arr);
+        render(renderdata,ul[0]);
+      function render(rr,option)
+      {
+      if(rr)
+      {
+        rr.forEach(r=>{
+            create(r,option);
+        })
+      }
+    
+
+but[0].addEventListener("click",(e)=>{
+    if(but[0].textContent=="Add item")
+    {
+      create('',option);
+    }
+})
+      }
+function create(mantext,option)
+{
+
+  
+
+
+  var updates=document.createElement('button');
+      updates.textContent="update";
+
+  var edit=document.createElement('button');
+      edit.textContent="Edit";
+
+
+      var save=document.createElement('button');
+      save.textContent="Save";
+      save.type="submit";
+      
+        var del=document.createElement('button');
+        del.textContent="Delete";
+        updates.addEventListener("click",e=>{
+Updater(e);
+        })
+        del.addEventListener("click",e=>{
+Dele(e);
+        })
+        edit.addEventListener("click",e=>{
+edits(e);
+        })
+        save.addEventListener("click",e=>{       
+ Save(e);
+        }) 
+    var li=document.createElement('li');
+    var cat=document.createElement('input');
+    var span=document.createElement('input');
+if(mantext)
+{
+  span.value=mantext.names;
+  cat.value=mantext._id;
+}
+else
+{
+    span.value=input.value;
+    cat.value=cc.value;
+}
+    span.readOnly=true;
+    cat.readOnly=true;
+    li.appendChild(cat);
+    li.appendChild(span);
+    li.appendChild(del);
+    li.appendChild(save);
+    li.appendChild(edit);
+    li.appendChild(updates);
+    option.appendChild(li);
+    
+}
+function myfun()
+{
+  window.location.href="http://127.0.0.1:8000/?";
+}
+function dele(e)
+{
+    e.target.parentNode.remove();
+
+}
+function edits(e)
+{
+  
+  e.target.parentNode.childNodes[1].readOnly=false;
+  e.target.parentNode.childNodes[0].readOnly=false;
+}
+
+function Save(e)
+{
+  e.target.parentNode.childNodes[0].readOnly=true;
+  e.target.parentNode.childNodes[1].readOnly=true;
+  let ad=e.target.parentNode.childNodes[1].value;
+  let num=e.target.parentNode.childNodes[0].value;
+  let obj={
+    names:ad,
+    _id:num
+  }
+  fetch('http://127.0.0.1:8000/save',{
+    method:"POST",
+    body:JSON.stringify(obj)
+  }).then(r=>{
+    r.json().then(j=>{
+      console.log(j);
+      ul[0].remove();
+      var newul=document.createElement('ul');
+      document.querySelector('body').appendChild(newul);
+      render(j,newul);
+    })
+  })
+  
+}
+function Dele(e)
+{
+  
+  let ad=e.target.parentNode.childNodes[1].value;
+  let num=e.target.parentNode.childNodes[0].value;
+  let obj={
+    names:ad
+  }
+  fetch('http://127.0.0.1:8000/delete',{
+    method:"POST",
+    body:JSON.stringify(obj)
+  }).then(r=>{
+    r.json().then(j=>{
+      ul[0].remove();
+      var newul=document.createElement('ul');
+      document.querySelector('body').appendChild(newul);
+      render(j,newul);
+    })
+  })
+  
+}
+
+function Updater(e)
+{
+  let ad=e.target.parentNode.childNodes[1].value;
+  let num=e.target.parentNode.childNodes[0].value;
+  let obj={
+    names:ad,
+    _id:num
+  }
+  fetch('http://127.0.0.1:8000/update',{
+    method:"POST",
+    body:JSON.stringify(obj)
+  }).then(r=>{
+    r.json().then(j=>{
+      console.log(j);
+      ul[0].remove();
+      var newul=document.createElement('ul');
+      document.querySelector('body').appendChild(newul);
+      render(j,newul);
+    })
+  })
+  
+}
+    </script>
+  </body>
+</html>

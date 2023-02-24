@@ -1,14 +1,8 @@
 const express=require('express');
+const config=require('./conf.js');
+const rout=require('./router.js');
 const app=express();
-app.get('/',(req,res)=>{
-    res.send(`<!DOCTYPE html>
-    <html>
-        <head>
-    
-        </head>
-        <body>
-            <h1>Hi</h1>
-        </body>
-    </html>`)
-})
-app.listen(8000)
+app.set('view engine','ejs');
+config(app);
+rout(app);
+app.listen(8000);
