@@ -10,7 +10,18 @@ app.get('/',(req,res)=>{
     
         </head>
         <body>
-            <h1>kuyo8i8o</h1>
+            <h1>home</h1>
+        </body>
+    </html>`)
+})
+app.get('/user',(req,res)=>{
+    res.send(`<!DOCTYPE html>
+    <html>
+        <head>
+    
+        </head>
+        <body>
+            <h1>User</h1>
         </body>
     </html>`)
 })
