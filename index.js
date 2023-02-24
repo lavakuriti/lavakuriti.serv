@@ -1,14 +1,9 @@
 const express=require('express')
-const app=express()
+const path=require('path');
+const app=express();
+app.set('view engine','ejs');
+app.set('views',path.join(__dirname,""));
 app.get('/',(req,res)=>{
-    res.send(`<!DOCTYPE html>
-    <html>
-        <head>
-    
-        </head>
-        <body>
-            <h1>Quora and Reddit</h1>
-        </body>
-    </html>`)
+    res.render('ee')
 })
 app.listen(8000);
