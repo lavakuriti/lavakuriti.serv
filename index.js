@@ -7,7 +7,7 @@ app.get('/',(req,res)=>{
     
         </head>
         <body>
-            <h1>Quora</h1>
+            <h1>Quora and Reddit</h1>
         </body>
     </html>`)
 })
